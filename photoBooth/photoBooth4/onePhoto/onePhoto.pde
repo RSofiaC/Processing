@@ -1,3 +1,6 @@
+//Cabina de fotos by Regina Cantu
+//Countdown code by rbrauer https://forum.processing.org/one/topic/countdown-to-a-game#25080000000805202.html
+
 import processing.video.*;
 int time;
 int wait = 1000;
