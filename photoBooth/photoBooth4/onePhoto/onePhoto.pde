@@ -2,7 +2,9 @@ import processing.video.*;
 int time;
 int wait = 1000;
 int msec, sec;
-boolean start=false;
+boolean start;
+boolean foto=false;
+int flash;
 int capnum = 0;
 Capture myCapture;
 PImage aj;
@@ -23,10 +25,9 @@ void setup(){
 }
  
 void draw(){
-  println("start");
-  
-   if (myCapture.available()) {
+  if (myCapture.available()) {
     myCapture.read();
+  println(flash);
   }
  
   if(!start) {
@@ -36,15 +37,21 @@ void draw(){
 //current cumulative time in thousands of a second subtract the
 //time the countdown started to start from "now" divide by 1000
 //and drop the decimal part
-    if(sec == 4) start = true;
+   
+    if(sec == 4) {
+      start = true;
+      flash=0;
+    }
   
-  } else {
+  }
+  
+  if (flash==21){
 //do stuff here when the coundown finishes  
-//TODO it is not poping out of this else but when mouseclicked...make it stop!
+//TODO it takes 4 frames because sec is stuck for 4 millis in 3?
+   //background(255);
+    foto = true;
     saveFrame(capnum+".jpeg");
-  aj = loadImage(capnum+".jpeg");
-  capnum++;
-  //background(255);
+    capnum++;
   }
  
  
@@ -52,6 +59,7 @@ void draw(){
   if(sec == 3){ //after three seconds one second remains ...
     rect(240,80,48,160);
     rect(240,288,48,160);
+    flash++;
   }
   if(sec == 2){
     rect(80,32,160,48);
@@ -59,6 +67,7 @@ void draw(){
     rect(32,288,48,160);
     rect(80,448,160,48);
     rect(240,80,48,160);
+    flash++;
   }
   if(sec == 1){
     rect(80,32,160,48);
@@ -66,6 +75,7 @@ void draw(){
     rect(80,448,160,48);
     rect(240,80,48,160);
     rect(240,288,48,160);
+    flash++;
   }
 }
 
@@ -73,4 +83,5 @@ void mouseClicked() {
 //countdown again first resetting the "now" time and start var
   msec = millis();
   start = false;
+  foto = false;
 }
