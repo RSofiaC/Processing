@@ -48,22 +48,6 @@ void draw(){
    //background(255);
    fill(0);
 
-//switch(val) {
-
-//  case 's':
-//  globalframecount = 1;
-////  background(0);
-
-// break;
-
-//  case 't':
-////null
-//    break;
-//  default:
-//    //println("Zulu");   // Prints "Zulu"
-//    break;
-//}
-
  if (globalframecount == 25) {
  countdowntimer = 9;
  }
@@ -93,7 +77,7 @@ void draw(){
  } 
 
  if ((globalframecount < 250) & (globalframecount > 0)) {
-       image (myCapture, 0,0);
+         image(myCapture, 0, 0, width, height);
        //textFont(fontA, 30);
        fill(0);
        text ("Preview! Get ready for your photo in "+str(countdowntimer), x+2, y);
@@ -108,7 +92,7 @@ void draw(){
  }
 
  if ((globalframecount >= 250) & (globalframecount < 500)) {
-      image (myCapture, 0,0);
+    image(myCapture, 0, 0, width, height);
 
  if ((globalframecount > 250) & (globalframecount < 311))
  {
