@@ -13,8 +13,9 @@ Capture myCapture;
 PImage aj;
  
 void setup(){
+  fullScreen();
    //size of canvas
-  size(1024, 768);
+  //size(1024, 576);
   // setFullScreen(true);
 
   //slower frame rate
@@ -23,7 +24,23 @@ void setup(){
   //black background
   background(0);
   
- myCapture = new Capture(this, 640,480, 30); //HOW DO I GET A BETTER RESOLUTION IT WONT TAKE 1024,768 FROM MY CAMERA??
+  String[] cameras = Capture.list();
+  
+  if (cameras.length == 0) {
+    println("There are no cameras available for capture.");
+    exit();
+  } else {
+    println("Available cameras:");
+    for (int i = 0; i < cameras.length; i++) {
+      println(cameras[i]);
+    }
+    // The camera can be initialized directly using an 
+    // element from the array returned by list():
+    //cam = new Capture(this, cameras[4]);
+    //cam.start();     
+  }      
+  
+ myCapture = new Capture(this,cameras[64]); //HOW DO I GET A BETTER RESOLUTION IT WONT TAKE 1024,768 FROM MY CAMERA??
  myCapture.start(); 
 }
  
@@ -32,9 +49,9 @@ void draw(){
     myCapture.read();
   println(flash);
   }
- 
+  image(myCapture, 0, 0, width, height);
+   
   if(!start) {
-    image(myCapture, 0, 0, width, height);
     sec = floor((millis()-msec)*.001);
 //above:
 //current cumulative time in thousands of a second subtract the
@@ -48,21 +65,25 @@ void draw(){
   
   }
   
-  if (flash==21){
-//do stuff here when the coundown finishes  
-//TODO it takes 4 frames because sec is stuck for 4 millis in 3?
-   //background(255);
-    foto = true;
-    saveFrame(capnum+".jpeg");
-    capnum++;
-  }
- 
+  //if (flash==21 || flash == 71){
+////do stuff here when the coundown finishes  
+////TODO it takes 4 frames because sec is stuck for 4 millis in 3?
+  
+  //  foto = true;
+   
+  //}
  
   ////seconds////
   if(sec == 3){ //after three seconds one second remains ...
+ if(!start){
+ saveFrame(capnum+".jpeg");
+ background(255); 
+
     rect(240,80,48,160);
     rect(240,288,48,160);
-    flash++;
+    flash++; start = true;
+      flash=0;
+    capnum++; }
   }
   if(sec == 2){
     rect(80,32,160,48);
